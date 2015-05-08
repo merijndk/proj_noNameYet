@@ -1,25 +1,30 @@
-window.onload = function() {
-    var c=document.getElementById("myCanvas");
-    var ctx=c.getContext("2d");
-    var img=document.getElementById("scream");
-    ctx.drawImage(img,10,10);
-};
+var tile_neut = document.getElementById('tile');
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext("2d");
 
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
 
-var tile = document.getElementById('tile');
+var map = new Array(20);
+for (i = 0; i < map.length; i++){
+	map[i] = new Array(8);
+}
 
-document.body.appendChild(canvas);
+for (j=0; j<map.length; j++){
+   for(i=0; i<map[j].length; i++){
+   		map[j][i] = {oil: 10, gold: 10, image: tile_neut};
+   }
+}
 
-var render = function () {
-	ctx.drawImage(tile, 0, 0);
-	ctx.drawImage(tile, 10, 10);
-	ctx.drawImage(tile, 100, 100);
-	ctx.drawImage(tile, 10, 50);
-	ctx.drawImage(tile, 200, 200);
-};
-for (i=0; i<200; i++) {
-	render();
-};
-alert("klaar");
+var callback = function() {
+   for (j=0; j<map.length; j++){
+   for(i=0; i<map[j].length; i++){
+   		var img = map[j][i].image;
+   		ctx.drawImage(img, (j%2) * img.width *3 / 4 + (img.width + 42) * i, img.height / 3 * j);
+   }
+}
+   
+}
+
+
+   callback();
+
+   object.onclick=function(){myScript};
