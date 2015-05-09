@@ -97,5 +97,5 @@ function placeTile(name, x, y) {
 
 
 // This makes the magic happen
-populate(getHexMap(6));
+populate(getHexMap(8));
 
