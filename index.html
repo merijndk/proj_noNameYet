@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<!--<link rel="stylesheet" type="text/css" href="style.css"/>-->
+<link rel="stylesheet" type="text/css" href="style.css"/>
 
 <title>
 Game
@@ -9,10 +9,24 @@ Game
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body>
-	<canvas id="myCanvas" width="1000" height="1000"></canvas>
-<div style="display:none;">
-	<img id="tile" src="images/tile.png"/>
+<div id="hexmap"></div>
+
+<div id="info"></div>
+
+<!-- templates -->
+<div id="templates" class="hidden">
+  <h1>Templates</h1>
+
+  <div class="neut">
+    <img src="images/tile.png" width="72" height="72"/>
+  </div>
+  <div class="dark">
+    <img src="images/tile2.png" width="72" height="72"/>
+  </div>
 </div>
+
+
+
 	<script type='text/javascript' src='script.js'></script>
 </body>
 </html>

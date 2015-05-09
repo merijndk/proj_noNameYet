@@ -1,30 +1,101 @@
-var tile_neut = document.getElementById('tile');
-var canvas = document.getElementById('myCanvas');
-var ctx = canvas.getContext("2d");
-
-
-var map = new Array(20);
-for (i = 0; i < map.length; i++){
-	map[i] = new Array(8);
+/* 
+  Return a list of lists of strings. The top-level list 
+  represents columns, and each column list is a series of 
+  strings where the string value corresponds to the name
+  of a tile in the templates div.
+*/
+function getHexMap(bounds) {
+  var columns = [];
+  for (var c = 0; c < bounds; c++) {
+    var row = [];
+    for (var r = 0; r < bounds; r++) {
+      row.push(randomTile());
+    }
+    columns.push(row);
+  }
+  return columns;
+}
+    
+// For testing - return a random tile, 66% desert, 33% ocean
+function randomTile() {
+  if (Math.floor(Math.random() * 3) == 0) {
+    return "neut";
+  }
+  return "dark";
 }
 
-for (j=0; j<map.length; j++){
-   for(i=0; i<map[j].length; i++){
-   		map[j][i] = {oil: 10, gold: 10, image: tile_neut};
-   }
+/*
+  Given a 2d array like that returned from getHexMap(),
+  iterate through it and position the named tiles in 
+  their proper places in the hexmap div
+*/
+function populate(hexmap) {
+  for (var x = 0; x < hexmap.length; x++) {
+    var column = hexmap[x];
+    for (var y = 0; y < column.length; y++) {
+      
+      // clone the tile and place it
+      var tile = placeTile(column[y], x, y);
+      
+      // Add some event handling
+      tile.bind("mouseover", function(event) {
+        var message = "Hex position (" 
+            + $(this).data("row") + ", " 
+            + $(this).data("column") + ")";
+        $('#info').text(message);
+      });
+    }
+  }
 }
 
-var callback = function() {
-   for (j=0; j<map.length; j++){
-   for(i=0; i<map[j].length; i++){
-   		var img = map[j][i].image;
-   		ctx.drawImage(img, (j%2) * img.width *3 / 4 + (img.width + 42) * i, img.height / 3 * j);
-   }
+/*
+  Given a tile name and row/column numbers, make a clone 
+  of the tile and place it in the hexmap.
+*/
+function placeTile(name, x, y) {
+  var tile = $("." + name, "#templates").children().clone();
+  
+  tile.hexMapPosition(x, y).appendTo($('#hexmap'));
+  return tile;
 }
-   
-}
+
+/*
+  jQuery extension to place a tile based on row and column data 
+  attached to the element set
+*/
+(function($) {
+  $.fn.hexMapPosition = function(row, column) {
+
+    // We store the row and column in the tile for 
+    // use in the tooltip stuff
+    this.data({"row": row, "column": column});
+    
+    var tile_width = this.attr("width");
+    var tile_height = this.attr("height");
+    
+    // Haven't done the math to check these but they work
+    var y_offset = tile_height / 2;
+    var x_offset = tile_width / 4;
+    
+    var xpos = 0 + (row * (tile_width - x_offset));
+    var ypos = 0 + (column * tile_height);
+      
+    // Am I really the only developer on earth who
+    // hates CSS positioning?
+    ypos += 40; 
+    
+    if (row % 2 == 0) {
+      ypos -= y_offset;
+    }
+    
+    var style = {"position": "absolute", 
+                 "top": ypos, "left": xpos};
+    
+    return this.css(style);
+  }
+})(jQuery);
 
 
-   callback();
+// This makes the magic happen
+populate(getHexMap(6));
 
-   object.onclick=function(){myScript};
