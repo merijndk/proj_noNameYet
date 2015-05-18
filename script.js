@@ -3,47 +3,52 @@ function getHexMap(bounds) {
   for (var c = 0; c < bounds; c++) {
     var row = [];
     for (var r = 0; r < bounds; r++) {
-      row.push(randomTile());
+      row.push(generateTile());
     }
     columns.push(row);
   }
   return columns;
 }
     
-function randomTile() {
+function generateTile() {
   if (Math.floor(Math.random() * 3) == 0) {
-    return "neut";
+    return {"color": "light", "oil": Math.floor(Math.random()*10)+1};
   }
-  return "dark";
+  return {"color": "dark", "oil": Math.floor(Math.random()*10)+1};
 }
 
 function populate(hexmap) {
   for (var x = 0; x < hexmap.length; x++) {
     var column = hexmap[x];
     for (var y = 0; y < column.length; y++) {
-      
-      var tile = placeTile(column[y], x, y);
+      var cell = column[y];
+      var tile = placeTile(cell, x, y);
       
       tile.bind("mouseover", function(event) {
-        var message = "Plek (" 
+        var message = "(" 
             + $(this).data("row") + ", " 
-            + $(this).data("column") + ")";
+            + $(this).data("column") + ", color: "
+						+ $(this).data("color") + ", oil: "
+						+ $(this).data("oil") + ")";
+						
         $('#info').text(message);
       });
     }
   }
 }
 
-function placeTile(name, x, y) {
-  var tile = $("." + name, "#templates").children().clone();
+function placeTile(cell, x, y) {
+  var tile = $("." + cell.color, "#templates").children().clone();
   tile.css("z-index", y*10+x%2*5);
-  tile.hexMapPosition(x, y).appendTo($('#hexmap'));
+  tile.hexMapPosition(cell, x, y).appendTo($('#hexmap'));
   return tile;
 }
 
 (function($) {
-  $.fn.hexMapPosition = function(row, column) {
-    this.data({"row": row, "column": column});
+  $.fn.hexMapPosition = function(cell, row, column) {
+    this.data(cell);
+		this.data("row", row);
+		this.data("column", column);
     
     var tile_width = this.attr("width");
     var tile_height = this.attr("height");
