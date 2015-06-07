@@ -4,14 +4,6 @@ html, body {
   height: 100%;
 }
 
-div#info {
-  position: absolute;
-  margin: 0px auto;
-  bottom: 0;
-  width:13em;
-  height: 60px;
-}
-
 div#hexmap {
   position: relative;
 }

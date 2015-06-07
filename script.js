@@ -29,6 +29,10 @@ function drawMap(map) {
 			tile.style.left = String(i%2*60+j*tilewidth*3/2) + "px";
 			tile.style.top = String(i*tileheight/3) + "px";
 			tile.innerHTML = "<img src='images/tile"+tileinfo.color+".png'/>";
+			$(tile).data(tileinfo);
+			$(tile).data("x", j);
+			$(tile).data("y", i);
+			$(tile).data("selected", false);
 			$('#hexmap').append(tile);
 		}
 	}
@@ -36,6 +40,17 @@ function drawMap(map) {
 
 var map = createMap(6);
 drawMap(map);
+
+$('.tile').click(function(){
+	alert($(this).data("color"));
+	if ($(this).data("selected")){
+		$(this).data("selected", false);
+		$(this).css("top", $(this).data("y")*tileheight/3);
+	} else {
+		$(this).data("selected", true);
+		$(this).css("top", $(this).data("y")*tileheight/3-20);
+	};
+});
 
 $( "#login" ).click(function() {
   var naam = document.getElementById('naam').value;
