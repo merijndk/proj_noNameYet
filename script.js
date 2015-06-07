@@ -33,6 +33,10 @@ function populate(hexmap) {
 						
         $('#info').text(message);
       });
+			
+			tile.bind("click", function(event) {
+				$(this).data("color") = "dark";
+			});
     }
   }
 }
@@ -70,6 +74,23 @@ function placeTile(cell, x, y) {
   }
 })(jQuery);
 
+function writeHighscore(){
+	var naam = prompt('Game over!\nJe score is: ' + endscore + '. Voer je naam in:', 'naam');
+	if (naam) {
+		var xmlhttp;
+		if (!isallowed(naam)) {
+			writeHighscore();
+		} else { 
+			if (window.XMLHttpRequest) { //IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else { //IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.open("GET","ins.php?naam="+naam+"&score="+endscore,false);
+			xmlhttp.send(null);
+		}
+	}
+};
 
 populate(getHexMap(8));
 
