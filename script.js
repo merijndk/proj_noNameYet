@@ -74,8 +74,13 @@ function placeTile(cell, x, y) {
   }
 })(jQuery);
 
-function writeHighscore(){
-	var naam = prompt('Game over!\nJe score is: ' + endscore + '. Voer je naam in:', 'naam');
+$( "#login" ).click(function() {
+  var naam = document.getElementById('naam').value;
+  alert( naam );
+  writeHighscore(naam);
+});
+
+function writeHighscore(naam){
 	if (naam) {
 		var xmlhttp;
 		if (!isallowed(naam)) {
@@ -86,7 +91,7 @@ function writeHighscore(){
 			} else { //IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			xmlhttp.open("GET","ins.php?naam="+naam+"&score="+endscore,false);
+			xmlhttp.open("GET","ins.php?naam="+naam,false);
 			xmlhttp.send(null);
 		}
 	}
