@@ -15,6 +15,7 @@ div#info {
 div#hexmap {
   position: relative;
 }
-div.hidden {
-  display: none;
+
+.tile {
+	position: absolute;
 }
