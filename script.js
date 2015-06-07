@@ -42,7 +42,6 @@ var map = createMap(6);
 drawMap(map);
 
 $('.tile').click(function(){
-	alert($(this).data("color"));
 	if ($(this).data("selected")){
 		$(this).data("selected", false);
 		$(this).css("top", $(this).data("y")*tileheight/3);
@@ -64,9 +63,9 @@ function writeHighscore(naam){
 		if (!isallowed(naam)) {
 			writeHighscore();
 		} else { 
-			if (window.XMLHttpRequest) { //IE7+, Firefox, Chrome, Opera, Safari
+			if (window.XMLHttpRequest) {
 				xmlhttp = new XMLHttpRequest();
-			} else { //IE6, IE5
+			} else {
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 			xmlhttp.open("GET","ins.php?naam="+naam,false);
