@@ -1,5 +1,6 @@
 var tileheight = 94;
 var tilewidth = 80;
+var selected = 0;
 
 function createMap(bounds) {
   var table = [];
@@ -42,10 +43,16 @@ var map = createMap(12);
 drawMap(map);
 
 $('.tile').click(function(){
-	if ($(this).data("selected")){
+	if ($(this).data("selected") == true){
+		selected = 0;
 		$(this).data("selected", false);
 		$(this).css("top", $(this).data("y")*tileheight/3);
 	} else {
+		if (selected != 0) {
+			selected.data("selected", false);
+			selected.css("top", $(selected).data("y")*tileheight/3);
+		};
+		selected = $(this);
 		$(this).data("selected", true);
 		$(this).css("top", $(this).data("y")*tileheight/3-20);
 	};
