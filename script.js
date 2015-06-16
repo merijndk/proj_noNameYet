@@ -17,7 +17,7 @@ function generateTile() {
   if (Math.floor(Math.random() * 3) == 0) {
     return {"color": "light", "oil": Math.floor(Math.random()*10)+1};
   }
-  return {"color": "dark", "oil": Math.floor(Math.random()*10)+1};
+  return {"color": "blue", "oil": Math.floor(Math.random()*10)+1};
 }
 
 function drawMap(map) {
@@ -38,7 +38,7 @@ function drawMap(map) {
 	}
 }
 
-var map = createMap(6);
+var map = createMap(12);
 drawMap(map);
 
 $('.tile').click(function(){
